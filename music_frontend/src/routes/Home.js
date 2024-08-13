@@ -1,5 +1,4 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
-import music_logo from "../assets/images/music_logo.svg";
 import IconText from "../components/shared/IconText";
 import TextWithHover from "../components/shared/TextWithHover";
 
@@ -11,7 +10,7 @@ const Home = () => {
                 <div>
                     {/* This div is for logo */}
                     <div className="logoDiv p-6">
-                        <img src={music_logo} alt="spotify logo" width={125} />
+                    <svg xmlns="http://www.w3.org/2000/svg" width="58" height="58" viewBox="0 0 48 48"><g fill="#e91e63"><circle cx="19" cy="33" r="9"/><path d="M24 6v27h4V14l11 3v-7z"/></g></svg>
                     </div>
                     <div className="py-5">
                         <IconText

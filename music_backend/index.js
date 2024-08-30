@@ -27,25 +27,27 @@ mongoose.connect(process.env.URI)
 
     // passport-jwt setup
 
-    let opts = {};
-    opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-    opts.secretOrKey = 'thiskeysupposedToBeSecerate';
-    passport.use(
-        new JwtStrategy(opts, function (jwt_payload, done) {
-        User.findOne({id: jwt_payload.sub}, function(err, user) {
-            // done (error ,doestheuserExist)
-            if (err) {
-                return done(err, false);
-            }
-            if (user) {
-                return done(null, user);
-            } else {
-                return done(null, false);
-                // or you could create a new account
-            }
-        });
-    })
-    );
+    const opts = {};
+opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
+opts.secretOrKey = 'thiskeysupposedToBeSecerate';
+
+passport.use(
+  new JwtStrategy(opts, async function (jwt_payload, done) {
+    try {
+      // Use await with findOne
+      const user = await User.findOne({ id: jwt_payload.sub });
+
+      if (user) {
+        return done(null, user);
+      } else {
+        return done(null, false);
+        // or you could create a new account
+      }
+    } catch (err) {
+      return done(err, false);
+    }
+  })
+);
 
 // Define a basic route
 app.get("/", (req, res) => {
